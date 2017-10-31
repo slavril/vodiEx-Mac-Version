@@ -35,6 +35,9 @@
 @property (nonatomic, weak) IBOutlet NSPopUpButton *popupButton;
 @property (nonatomic, copy) NSString *inputVersion;
 
+@property (nonatomic, weak) IBOutlet NSTextField *rootPathTextfield;
+@property (nonatomic, weak) IBOutlet NSButton *saveButton;
+
 @end
 
 @implementation ViewController
@@ -43,11 +46,11 @@
     [super viewDidLoad];
     self.inputLanguage = [NSMutableDictionary new];
     self.inputLocalize = [NSMutableDictionary new];
+    self.rootPathTextfield.stringValue = [self loadConfig];
     [self setupPopupButton];
     [self.label setStringValue:@"Stay"];
     // Do any additional setup after loading the view.
 }
-
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
@@ -57,9 +60,15 @@
 
 - (void)mergeFiles {
     //3 for
-    for (NSInteger index = 2; index <= localizeFileCount+1; index++) {
-        [self mergeFileWithType:index];
-        [self writeLocalize:index];
+    if (!self.inputLocalize.count || !self.inputLanguage.count) {
+        
+    }
+    else {
+        for (NSInteger index = 2; index <= localizeFileCount+1; index++) {
+            [self mergeFileWithType:index];
+            [self writeLocalize:index];
+        }
+        [self.label setStringValue:@"Done"];
     }
 }
 
@@ -189,10 +198,28 @@
     [self readCSVFile];
     [self readLanguageFile];
     [self mergeFiles];
-    [self.label setStringValue:@"Done"];
+}
+
+- (IBAction)handleSaveConfig:(id)sender {
+    [self saveConfig:self.rootPathTextfield.stringValue];
 }
 
 #pragma mark - path support
+
+- (void)saveConfig:(NSString *)path {
+    if (!path.length)
+        return;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"rootPathUrl"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)loadConfig {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"rootPathUrl"]) {
+        return [[NSUserDefaults standardUserDefaults] objectForKey:@"rootPathUrl"];
+    }
+    return rootPath;
+}
 
 - (NSString *)rootPathVersion:(NSString *)versionId {
     if (versionId.length) {
@@ -219,9 +246,14 @@
 - (void)readCSVFile {
     NSString *fileString = [NSString stringWithContentsOfFile:[self csvFilePath] encoding:NSUTF8StringEncoding error:nil];
     NSArray* rows = [fileString componentsSeparatedByString:@"\n"];
-    for (int i = 1; i < rows.count-1; i++){
-        NSString* row = [rows objectAtIndex:i];
-        [self parseRow:row];
+    if (rows.count) {
+        for (int i = 1; i < rows.count-1; i++){
+            NSString* row = [rows objectAtIndex:i];
+            [self parseRow:row];
+        }
+    }
+    else {
+        self.label.stringValue = @"Parse CSV fail";
     }
 }
 
@@ -235,8 +267,13 @@
     NSString *path = [NSString stringWithFormat:@"%@%@", [self localizePath], [self localizeFileNamePath:type]];
     NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSMutableArray *rows = [NSMutableArray arrayWithArray:[fileString componentsSeparatedByString:@"\n"]];
-    [self correctReadContent:rows];
-    [self.inputLocalize setObject:rows forKey:@(type)];
+    if (rows.count) {
+        [self correctReadContent:rows];
+        [self.inputLocalize setObject:rows forKey:@(type)];
+    }
+    else {
+        self.label.stringValue = @"Parse Strings fail";
+    }
 }
 
 - (void)correctReadContent:(NSMutableArray *)contents {

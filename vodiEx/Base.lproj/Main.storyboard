@@ -185,23 +185,55 @@
                                     <menu key="menu" id="rSZ-fA-YdF"/>
                                 </popUpButtonCell>
                             </popUpButton>
+                            <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xV0-w3-Z4D">
+                                <rect key="frame" x="16" y="106" width="448" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Ue7-lh-Qwl"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="pey-rI-gjf">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7iX-TQ-pZf">
+                                <rect key="frame" x="10" y="47" width="460" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TwJ-I3-WBO"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mAW-NC-5md">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="handleSaveConfig:" target="XfG-lQ-9wD" id="uHe-yZ-aka"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="CuR-La-CDV" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="16" id="9Gv-Sf-KbL"/>
                             <constraint firstAttribute="trailing" secondItem="Jbr-GH-IA8" secondAttribute="trailing" constant="16" id="AJq-He-9a6"/>
+                            <constraint firstItem="7iX-TQ-pZf" firstAttribute="top" secondItem="xV0-w3-Z4D" secondAttribute="bottom" constant="8" id="KT7-Bs-pOJ"/>
                             <constraint firstAttribute="trailing" secondItem="CuR-La-CDV" secondAttribute="trailing" constant="16" id="Ndd-7q-f9Q"/>
+                            <constraint firstAttribute="trailing" secondItem="7iX-TQ-pZf" secondAttribute="trailing" constant="16" id="PA5-QK-AKE"/>
                             <constraint firstItem="lMW-HQ-cdT" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="16" id="X1z-nT-3UV"/>
                             <constraint firstAttribute="trailing" secondItem="lMW-HQ-cdT" secondAttribute="trailing" constant="16" id="X80-v4-v4A"/>
                             <constraint firstItem="CuR-La-CDV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="16" id="XIX-K2-oPa"/>
                             <constraint firstItem="Jbr-GH-IA8" firstAttribute="top" secondItem="CuR-La-CDV" secondAttribute="bottom" constant="20" id="fgn-hh-Qtv"/>
+                            <constraint firstItem="xV0-w3-Z4D" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="16" id="fl9-ni-ltD"/>
+                            <constraint firstItem="7iX-TQ-pZf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="16" id="jRN-NY-SVk"/>
                             <constraint firstItem="lMW-HQ-cdT" firstAttribute="top" secondItem="Jbr-GH-IA8" secondAttribute="bottom" constant="16" id="ksZ-wu-r5L"/>
+                            <constraint firstAttribute="trailing" secondItem="xV0-w3-Z4D" secondAttribute="trailing" constant="16" id="rX0-42-Mc4"/>
                             <constraint firstItem="Jbr-GH-IA8" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="16" id="sJd-rO-Q9A"/>
+                            <constraint firstItem="xV0-w3-Z4D" firstAttribute="top" secondItem="lMW-HQ-cdT" secondAttribute="bottom" constant="8" id="wsB-XN-hN9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="button" destination="Jbr-GH-IA8" id="Uug-zD-Lsf"/>
                         <outlet property="label" destination="lMW-HQ-cdT" id="aIz-Cs-xk2"/>
                         <outlet property="popupButton" destination="CuR-La-CDV" id="ykt-cd-Fe2"/>
+                        <outlet property="rootPathTextfield" destination="xV0-w3-Z4D" id="ga6-Gm-SEI"/>
+                        <outlet property="saveButton" destination="7iX-TQ-pZf" id="n5U-xy-g3q"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
